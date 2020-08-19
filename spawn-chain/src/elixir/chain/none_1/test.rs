@@ -110,7 +110,7 @@ fn run_through(n: usize) {
         inspect::function(),
         inspect::ARITY,
         Box::new(|child_process| {
-            let n_term = child_process.integer(n)?;
+            let n_term = child_process.integer(n);
 
             Ok(vec![
                 super::frame().with_arguments(false, &[n_term]),

@@ -39,7 +39,7 @@ fn result(
     let _: Boxed<Resource> = document.try_into().unwrap();
     let _: Boxed<Resource> = tr.try_into().unwrap();
 
-    let tag = process.binary_from_str("td")?;
+    let tag = process.binary_from_str("td");
     process.queue_frame_with_arguments(
         liblumen_web::document::create_element_2::frame().with_arguments(false, &[document, tag]),
     );

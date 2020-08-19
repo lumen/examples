@@ -40,7 +40,7 @@ fn result(process: &Process, ok_tr: Term, document: Term, text: Term) -> excepti
     assert!(tr.is_boxed_resource_reference());
 
     // TODO actually call `to_string(self)`
-    let pid_text_binary = process.binary_from_str(&format!("{}", process.pid_term()))?;
+    let pid_text_binary = process.binary_from_str(&format!("{}", process.pid_term()));
     process.queue_frame_with_arguments(
         liblumen_web::document::create_text_node_2::frame()
             .with_arguments(false, &[document, pid_text_binary]),

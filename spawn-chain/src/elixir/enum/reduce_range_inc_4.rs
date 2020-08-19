@@ -41,7 +41,7 @@ fn result(
 
                     Ok(Term::NONE)
                 } else {
-                    let argument_list = process.list_from_slice(&[first, acc])?;
+                    let argument_list = process.list_from_slice(&[first, acc]);
 
                     Err(badarity(
                         process,
@@ -65,7 +65,7 @@ fn result(
         // # returns: new_first
         // first + 1
         // ```
-        let inc = process.integer(1)?;
+        let inc = process.integer(1);
         process.queue_frame_with_arguments(add_2::frame().with_arguments(false, &[first, inc]));
 
         // ```elixir

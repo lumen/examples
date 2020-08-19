@@ -57,7 +57,7 @@ fn run_with_output(count: usize, output: Output) -> js_sys::Promise {
     wait::with_return_0::spawn(
         options,
     |child_process| {
-        let count_term = child_process.integer(count)?;
+        let count_term = child_process.integer(count);
 
         // if this fails use a bigger sized heap
         let frame = match output {

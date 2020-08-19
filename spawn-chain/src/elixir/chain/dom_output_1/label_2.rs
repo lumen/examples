@@ -43,7 +43,7 @@ fn result(process: &Process, ok_document: Term, text: Term) -> exception::Result
     let document = ok_document_tuple[1];
     assert!(document.is_boxed_resource_reference());
 
-    let tag = process.binary_from_str("tr")?;
+    let tag = process.binary_from_str("tr");
     process.queue_frame_with_arguments(
         liblumen_web::document::create_element_2::frame().with_arguments(false, &[document, tag]),
     );

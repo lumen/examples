@@ -42,7 +42,7 @@ fn result(
 
                 Ok(Term::NONE)
             } else {
-                let argument_list = process.list_from_slice(&[first, acc])?;
+                let argument_list = process.list_from_slice(&[first, acc]);
 
                 Err(badarity(
                     process,

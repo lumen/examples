@@ -44,7 +44,7 @@ fn result(process: &Process, n: Term, output: Term) -> exception::Result<Term> {
     // 1..n
     // ```
     // assumed to be fast enough to act as a BIF
-    let first = process.integer(1)?;
+    let first = process.integer(1);
     let last = n;
     let result = elixir::range::new(first, last, process);
 
@@ -60,7 +60,7 @@ fn result(process: &Process, n: Term, output: Term) -> exception::Result<Term> {
             //    end
             //  )
             // ```
-            let reducer = elixir::chain::create_processes_reducer_3::closure(process, output)?;
+            let reducer = elixir::chain::create_processes_reducer_3::closure(process, output);
             process.queue_frame_with_arguments(
                 elixir::r#enum::reduce_3::frame()
                     .with_arguments(false, &[range, process.pid_term(), reducer]),

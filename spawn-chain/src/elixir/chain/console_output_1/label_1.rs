@@ -20,7 +20,7 @@ fn result(process: &Process, self_pid_term: Term, text: Term) -> exception::Resu
     let self_pid: Pid = self_pid_term.try_into().unwrap();
 
     // TODO use `<>` and `to_string` to emulate interpolation properly
-    let full_text = process.binary_from_str(&format!("pid={} {}", self_pid, text))?;
+    let full_text = process.binary_from_str(&format!("pid={} {}", self_pid, text));
     process.queue_frame_with_arguments(
         elixir::io::puts_1::frame().with_arguments(false, &[full_text]),
     );

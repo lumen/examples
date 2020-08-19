@@ -35,11 +35,10 @@ mod label_7;
 mod label_8;
 mod label_9;
 
-use liblumen_alloc::erts::exception::Alloc;
 use liblumen_alloc::erts::process::Process;
 use liblumen_alloc::erts::term::prelude::*;
 
-pub fn closure(process: &Process) -> Result<Term, Alloc> {
+pub fn closure(process: &Process) -> Term {
     process.export_closure(super::module(), function(), ARITY, CLOSURE_NATIVE)
 }
 

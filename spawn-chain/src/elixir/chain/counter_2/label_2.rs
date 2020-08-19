@@ -20,7 +20,7 @@ fn result(process: &Process, n: Term, next_pid: Term, output: Term) -> exception
     // # full stack: (n)
     // # returns: sum
     // n + 1
-    let one = process.integer(1)?;
+    let one = process.integer(1);
     process.queue_frame_with_arguments(erlang::add_2::frame().with_arguments(false, &[n, one]));
 
     // ```elixir

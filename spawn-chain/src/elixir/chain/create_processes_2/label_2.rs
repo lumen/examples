@@ -56,8 +56,7 @@ fn result(process: &Process, sent: Term, output: Term) -> exception::Result<Term
                     let output_closure: Boxed<Closure> = output.try_into().unwrap();
                     // TODO use `<>` and `to_string` to more closely emulate interpolation
                     let binary = process
-                        .binary_from_str(&format!("Result is {}", final_answer))
-                        .unwrap();
+                        .binary_from_str(&format!("Result is {}", final_answer));
                     process.queue_frame_with_arguments(
                         output_closure.frame_with_arguments(false, vec![binary]),
                     );

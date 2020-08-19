@@ -10,13 +10,12 @@
 //! ```
 
 use liblumen_alloc::erts::exception;
-use liblumen_alloc::erts::exception::Alloc;
 use liblumen_alloc::erts::process::Process;
 use liblumen_alloc::erts::term::prelude::*;
 
 use liblumen_otp::erlang;
 
-pub fn closure(process: &Process, output: Term) -> std::result::Result<Term, Alloc> {
+pub fn closure(process: &Process, output: Term) -> Term {
     process.anonymous_closure_with_env_from_slice(
         super::module(),
         0,
@@ -54,7 +53,7 @@ fn result(
 
     let module = Atom::str_to_term("Elixir.Chain");
     let function = Atom::str_to_term("counter");
-    let arguments = process.list_from_slice(&[send_to, output])?;
+    let arguments = process.list_from_slice(&[send_to, output]);
 
     process.queue_frame_with_arguments(
         erlang::spawn_3::frame().with_arguments(false, &[module, function, arguments]),

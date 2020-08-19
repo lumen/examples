@@ -6,13 +6,12 @@
 
 mod label_1;
 
-use liblumen_alloc::erts::exception::Alloc;
 use liblumen_alloc::erts::process::Process;
 use liblumen_alloc::erts::term::prelude::*;
 
 use liblumen_otp::erlang;
 
-pub fn closure(process: &Process) -> Result<Term, Alloc> {
+pub fn closure(process: &Process) -> Term {
     process.export_closure(function(), super::module(), ARITY, CLOSURE_NATIVE)
 }
 

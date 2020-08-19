@@ -39,7 +39,7 @@ fn result(process: &Process, time_value: Term, output: Term, n: Term) -> excepti
 
     // TODO use `<>` and `to_string` to emulate interpolation more exactly
     let output_data =
-        process.binary_from_str(&format!("Chain.run({}) in {} microsecond(s)", n, time))?;
+        process.binary_from_str(&format!("Chain.run({}) in {} microsecond(s)", n, time));
     process
         .queue_frame_with_arguments(output_closure.frame_with_arguments(false, vec![output_data]));
 

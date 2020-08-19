@@ -23,11 +23,11 @@ fn result(process: &Process, n: Term) -> exception::Result<Term> {
     assert!(n.is_integer());
     let n_usize: usize = n.try_into().unwrap();
 
-    let arguments = process.list_from_slice(&[n])?;
-    let min_heap_size_value = process.integer(79 + n_usize * 10)?;
+    let arguments = process.list_from_slice(&[n]);
+    let min_heap_size_value = process.integer(79 + n_usize * 10);
     let min_heap_size_entry =
-        process.tuple_from_slice(&[atom!("min_heap_size"), min_heap_size_value])?;
-    let options = process.list_from_slice(&[min_heap_size_entry])?;
+        process.tuple_from_slice(&[atom!("min_heap_size"), min_heap_size_value]);
+    let options = process.list_from_slice(&[min_heap_size_entry]);
 
     process.queue_frame_with_arguments(erlang::spawn_opt_4::frame().with_arguments(
         false,

@@ -42,7 +42,7 @@ fn result(process: &Process, last: Term, output: Term) -> exception::Result<Term
     // # returns: sent
     // send(last, 0) # start the count by sending a zero to the last process
     // ```
-    let message = process.integer(0).unwrap();
+    let message = process.integer(0);
     process.queue_frame_with_arguments(
         erlang::send_2::frame().with_arguments(false, &[last, message]),
     );

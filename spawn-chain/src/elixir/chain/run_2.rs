@@ -21,7 +21,7 @@ use liblumen_otp::timer;
 fn result(process: &Process, n: Term, output: Term) -> exception::Result<Term> {
     let module = atom!("Elixir.Chain");
     let function = atom!("create_processes");
-    let arguments = process.list_from_slice(&[n, output])?;
+    let arguments = process.list_from_slice(&[n, output]);
     process.queue_frame_with_arguments(
         timer::tc_3::frame().with_arguments(false, &[module, function, arguments]),
     );

@@ -33,7 +33,7 @@ fn result(process: &Process, ok_event_target: Term) -> exception::Result<Term> {
     let event_target = ok_event_target_tuple[1];
     assert!(event_target.is_boxed_resource_reference());
 
-    let name = process.binary_from_str("n")?;
+    let name = process.binary_from_str("n");
     process.queue_frame_with_arguments(
         liblumen_web::html_form_element::element_2::frame()
             .with_arguments(false, &[event_target, name]),

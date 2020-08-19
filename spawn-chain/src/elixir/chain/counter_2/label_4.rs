@@ -20,7 +20,7 @@ fn result(process: &Process, sent: Term, output: Term, next_pid: Term) -> except
     assert_eq!(output_closure.arity(), 1);
 
     // TODO use `<>` and `to_string` instead of `format!` to properly emulate interpolation
-    let data = process.binary_from_str(&format!("sent {} to {}", sent, next_pid))?;
+    let data = process.binary_from_str(&format!("sent {} to {}", sent, next_pid));
     process.queue_frame_with_arguments(output_closure.frame().with_arguments(false, &[data]));
 
     Ok(Term::NONE)

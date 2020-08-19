@@ -37,7 +37,7 @@ fn result(process: &Process, next_pid: Term, output: Term) -> exception::Result<
     // ```elixir
     // output.("spawned")
     // ```
-    let output_data = process.binary_from_str("spawned")?;
+    let output_data = process.binary_from_str("spawned");
     process
         .queue_frame_with_arguments(output_closure.frame_with_arguments(false, vec![output_data]));
 

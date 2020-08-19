@@ -21,7 +21,7 @@ use super::label_12;
 fn result(process: &Process, ok: Term, document: Term, tr: Term) -> exception::Result<Term> {
     assert_eq!(ok, atom!("ok"));
 
-    let id = process.binary_from_str("output")?;
+    let id = process.binary_from_str("output");
     process.queue_frame_with_arguments(
         liblumen_web::document::get_element_by_id_2::frame().with_arguments(false, &[document, id]),
     );

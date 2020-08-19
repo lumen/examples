@@ -20,7 +20,7 @@ use crate::elixir::chain::{dom_output_1, run_2};
 fn result(process: &Process, n: Term) -> exception::Result<Term> {
     assert!(n.is_integer());
 
-    let dom_output_closure = dom_output_1::closure(process)?;
+    let dom_output_closure = dom_output_1::closure(process);
     process
         .queue_frame_with_arguments(run_2::frame().with_arguments(false, &[n, dom_output_closure]));
 
