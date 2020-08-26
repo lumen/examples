@@ -8,12 +8,11 @@ use liblumen_alloc::erts::term::prelude::*;
 pub fn new(first: Term, last: Term, process: &Process) -> exception::Result<Term> {
     if first.is_integer() {
         if last.is_integer() {
-            Ok(process
-                .map_from_slice(&[
-                    (atom!("__struct__"), atom!("Elixir.Range")),
-                    (atom!("first"), first),
-                    (atom!("last"), last),
-                ]))
+            Ok(process.map_from_slice(&[
+                (atom!("__struct__"), atom!("Elixir.Range")),
+                (atom!("first"), first),
+                (atom!("last"), last),
+            ]))
         } else {
             Err(anyhow!("last ({}) is not an integer", last).into())
         }
