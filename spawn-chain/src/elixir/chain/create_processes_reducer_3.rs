@@ -9,6 +9,8 @@
 //! end
 //! ```
 
+use std::convert::TryInto;
+
 use liblumen_alloc::erts::exception;
 use liblumen_alloc::erts::process::Process;
 use liblumen_alloc::erts::term::prelude::*;
@@ -33,13 +35,20 @@ pub fn closure(process: &Process, output: Term) -> Term {
 #[native_implemented::function(Elixir.Chain:create_processes_reducer/3)]
 fn result(
     process: &Process,
+    closure: Term,
     element: Term,
     send_to: Term,
-    output: Term,
 ) -> exception::Result<Term> {
-    // from arguments
-    assert!(element.is_integer());
-    assert!(send_to.is_pid());
+    let closure_boxed_closure: Boxed<Closure> = closure.try_into().unwrap_or_else(|_| {
+        panic!(
+            "First argument ({}) passed to closure with environment should be closure",
+            closure
+        )
+    });
+    let env_slice = closure_boxed_closure.env_slice();
+    assert_eq!(env_slice.len(), 1);
+    let output = env_slice[0];
+
     // from environment
     assert!(
         output.is_boxed_function(),
@@ -47,9 +56,13 @@ fn result(
         output
     );
 
-    // In `lumen` compiled code the compile would optimize this to a direct call of
-    // `Scheduler::spawn(arc_process, module, function, arguments, counter_0_code)`, but we want
-    // to demonstrate the the `lumen_rt_full::code::set_apply_fn` system works here.
+    // from arguments
+    assert!(
+        element.is_integer(),
+        "element ({}) is not an integer",
+        element
+    );
+    assert!(send_to.is_pid());
 
     let module = Atom::str_to_term("Elixir.Chain");
     let function = Atom::str_to_term("counter");
