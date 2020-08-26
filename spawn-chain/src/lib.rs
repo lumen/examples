@@ -6,14 +6,18 @@
 mod elixir;
 mod start;
 
+use std::convert::TryInto;
+
+use liblumen_alloc::erts::term::prelude::*;
+
 use lumen_rt_full as runtime;
 use lumen_rt_full::process::spawn::options::Options;
 
-use liblumen_web::wait;
+use liblumen_web::r#async;
 
 use wasm_bindgen::prelude::*;
 
-use crate::elixir::chain::{console_1, dom_1, none_1};
+use crate::elixir::chain::{self, console_1, dom_1, none_1};
 use crate::start::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -25,7 +29,7 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 #[wasm_bindgen(start)]
 pub fn start() {
     set_panic_hook();
-    initialize_dispatch_table();
+    initialize_dispatch_table(vec![]);
     liblumen_web::start();
 }
 
@@ -50,24 +54,29 @@ enum Output {
     Dom,
 }
 
+impl Output {
+    fn function(&self) -> Atom {
+        match self {
+            Self::None => none_1::function(),
+            Self::Console => console_1::function(),
+            Self::Dom => dom_1::function(),
+        }
+    }
+}
+
 fn run_with_output(count: usize, output: Output) -> js_sys::Promise {
     let mut options: Options = Default::default();
     options.min_heap_size = Some(79 + count * 10);
 
-    wait::with_return_0::spawn(
+    // No need to HeapFragment because the count should always fit in a small integer 😊
+    let count_small_integer: SmallInteger = count.try_into().unwrap();
+    let count_term = count_small_integer.into();
+
+    r#async::apply_3::promise(
+        chain::module(),
+        output.function(),
+        vec![count_term],
         options,
-    |child_process| {
-        let count_term = child_process.integer(count);
-
-        // if this fails use a bigger sized heap
-        let frame = match output {
-            Output::None => none_1::frame(),
-            Output::Console => console_1::frame(),
-            Output::Dom => dom_1::frame()
-        };
-
-        Ok(vec![frame.with_arguments(false, &[count_term])])
-    })
-    // if this fails use a bigger sized heap
+    )
     .unwrap()
 }
