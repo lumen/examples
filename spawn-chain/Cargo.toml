@@ -48,6 +48,5 @@ features = ['console']
 
 [dev-dependencies]
 time-test = "0.2.1"
-futures = "0.1.28"
-wasm-bindgen-futures = "0.3.26"
-wasm-bindgen-test = "0.2"
+wasm-bindgen-futures = "0.4.17"
+wasm-bindgen-test = "0.3.17"
