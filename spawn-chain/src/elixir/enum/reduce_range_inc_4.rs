@@ -16,6 +16,7 @@ use anyhow::*;
 use liblumen_alloc::erts::exception;
 use liblumen_alloc::erts::exception::*;
 use liblumen_alloc::erts::process::Process;
+use liblumen_alloc::erts::process::trace::Trace;
 use liblumen_alloc::erts::term::prelude::*;
 
 use liblumen_otp::erlang::add_2;
@@ -47,11 +48,12 @@ fn result(
                         process,
                         reducer,
                         argument_list,
-                        anyhow!("reducer").into(),
+                        Trace::capture(),
+                        Some(anyhow!("reducer").into()),
                     ))
                 }
             }
-            _ => Err(badfun(process, reducer, anyhow!("reducer").into())),
+            _ => Err(badfun(process, reducer, Trace::capture(), anyhow!("reducer").into())),
         }
     }
     // defp reduce_range_inc(first, last, acc, fun) do
