@@ -2,6 +2,7 @@
 // `Alloc`
 #![feature(allocator_api)]
 #![feature(type_ascription)]
+#![feature(unwind_attributes)]
 
 mod elixir;
 mod start;
