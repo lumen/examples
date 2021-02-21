@@ -9,7 +9,7 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 default = ["console_error_panic_hook", "time_web_sys"]
-time_web_sys = ["parking_lot_core/time_web_sys", "lumen_rt_full/time_web_sys"]
+time_web_sys = ["lumen_rt_full/time_web_sys"]
 
 [dependencies]
 # The `console_error_panic_hook` crate provides better debugging of panics by
@@ -41,12 +41,11 @@ libeir_util_parse = { git = "https://github.com/eirproject/eir.git", branch = "l
 wee_alloc = { version = "0.4.2", optional = true }
 
 [dependencies.parking_lot_core]
-git = "https://github.com/KronicDeth/parking_lot.git"
-branch = "wasm32-time_web_sys"
-features = ["nightly"]
+version = "0.11.1"
+features = ["nightly", "wasm-bindgen"]
 
 [target.'cfg(target_arch = "wasm32")'.dependencies.web-sys]
-version = "0.3.20"
+version = "0.3.47"
 features = ['console']
 
 [dev-dependencies]

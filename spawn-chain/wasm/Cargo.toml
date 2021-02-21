@@ -9,7 +9,7 @@ crate-type = ["cdylib", "rlib"]
 
 [features]
 default = ["console_error_panic_hook", "time_web_sys"]
-time_web_sys = ["parking_lot_core/time_web_sys", "lumen_rt_full/time_web_sys"]
+time_web_sys = ["lumen_rt_full/time_web_sys"]
 
 [dependencies]
 anyhow = "1.0.11"
@@ -28,7 +28,7 @@ lumen_rt_full = { path = "../../../runtimes/full" }
 liblumen_web = { path = "../../../native_implemented/web" }
 native_implemented = { path = "../../../native_implemented/macro" }
 num-bigint = "0.2"
-wasm-bindgen = "0.2"
+wasm-bindgen = "0.2.70"
 
 # `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
 # compared to the default allocator's ~10K. It is slower than the default
@@ -37,13 +37,12 @@ wasm-bindgen = "0.2"
 # Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
 wee_alloc = { version = "0.4.2", optional = true }
 
-[dependencies.parking_lot_core]
-git = "https://github.com/KronicDeth/parking_lot.git"
-branch = "wasm32-time_web_sys"
-features = ["nightly"]
+[dependencies.parking_lot]
+version = "0.11.1"
+features = ["nightly", "wasm-bindgen"]
 
 [target.'cfg(target_arch = "wasm32")'.dependencies.web-sys]
-version = "0.3.20"
+version = "0.3.47"
 features = ['console']
 
 [dev-dependencies]
