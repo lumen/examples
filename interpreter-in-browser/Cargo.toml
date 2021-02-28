@@ -23,7 +23,7 @@ liblumen_alloc = { path = "../../liblumen_alloc" }
 lumen_rt_core = { path = "../../runtimes/core" }
 lumen_rt_full = { path = "../../runtimes/full" }
 liblumen_web = { path = "../../native_implemented/web" }
-num-bigint = "0.2"
+num-bigint = "0.3"
 wasm-bindgen = "0.2"
 
 lumen_interpreter = { path = "../../interpreter" }

@@ -27,7 +27,7 @@ lumen_rt_core = { path = "../../../runtimes/core" }
 lumen_rt_full = { path = "../../../runtimes/full" }
 liblumen_web = { path = "../../../native_implemented/web" }
 native_implemented = { path = "../../../native_implemented/macro" }
-num-bigint = "0.2"
+num-bigint = "0.3"
 wasm-bindgen = "0.2.70"
 
 # `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
